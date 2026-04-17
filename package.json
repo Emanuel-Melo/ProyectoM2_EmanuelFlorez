@@ -1,4 +1,12 @@
 {
+  "name": "miniblog-api",
+  "version": "1.0.0",
+  "description": "API REST para authors y posts",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
   "dependencies": {
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
