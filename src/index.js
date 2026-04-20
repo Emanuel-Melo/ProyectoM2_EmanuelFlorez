@@ -12,3 +12,9 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
+
+const authorsRoutes = require('./routes/authors.routes');
+const postsRoutes = require('./routes/posts.routes');
+
+app.use('/authors', authorsRoutes);
+app.use('/posts', postsRoutes);
