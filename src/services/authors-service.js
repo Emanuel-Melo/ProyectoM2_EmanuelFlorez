@@ -15,7 +15,9 @@ export const getAuthorById = async (id) => {
 
 export const createAuthor = async (name, email, bio) => {
     const result = await pool.query(
-        "INSERT INTO authors (name, email, bio) VALUES ($1, $2, $3) RETURNING *",
+        `INSERT INTO authors (name, email, bio)
+        VALUES ($1, $2, $3)
+        RETURNING *`,
         [name, email, bio]
     );
     return result.rows[0];
@@ -23,7 +25,7 @@ export const createAuthor = async (name, email, bio) => {
 
 export const updateAuthor = async (id, name, email, bio) => {
     const result = await pool.query(
-    `UPDATE authors
+        `UPDATE authors
         SET name = COALESCE($1, name),
             email = COALESCE($2, email),
             bio = COALESCE($3, bio)
@@ -31,7 +33,8 @@ export const updateAuthor = async (id, name, email, bio) => {
         RETURNING *`,
         [name, email, bio, id]
     );
-    return result.rows[0];
+
+    return result.rows[0]; // undefined si no existe
 };
 
 export const deleteAuthor = async (id) => {
@@ -39,5 +42,6 @@ export const deleteAuthor = async (id) => {
         "DELETE FROM authors WHERE id = $1 RETURNING *",
         [id]
     );
-    return result.rows[0];
+
+    return result.rows[0]; // undefined si no existe
 };
