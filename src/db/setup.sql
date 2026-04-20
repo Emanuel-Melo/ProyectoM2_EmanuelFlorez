@@ -16,13 +16,11 @@ CREATE TABLE posts (
     FOREIGN KEY (author_id) REFERENCES authors(id) ON DELETE CASCADE
 );
 
--- Seed authors
 INSERT INTO authors (name, email, bio) VALUES
 ('Ana García', 'ana@example.com', 'Desarrolladora full-stack'),
 ('Carlos Ruiz', 'carlos@example.com', 'Escritor técnico'),
 ('María López', 'maria@example.com', 'Ingeniera de software');
 
--- Seed posts
 INSERT INTO posts (title, content, author_id, published) VALUES
 ('Intro a Node', 'Node.js es...', 1, true),
 ('PostgreSQL vs MySQL', 'Comparación...', 2, true),
