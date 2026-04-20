@@ -5,25 +5,21 @@ let posts = [
     { id: 1, title: 'Post 1', content: 'Contenido', author_id: 1, published: true }
 ];
 
-// GET all
 router.get('/', (req, res) => {
     res.json(posts);
 });
 
-// GET by id
 router.get('/:id', (req, res) => {
     const post = posts.find(p => p.id == req.params.id);
     if (!post) return res.status(404).json({ message: 'Post not found' });
     res.json(post);
 });
 
-// GET by author
 router.get('/author/:authorId', (req, res) => {
     const result = posts.filter(p => p.author_id == req.params.authorId);
     res.json(result);
 });
 
-// POST
 router.post('/', (req, res) => {
     const { title, content, author_id } = req.body;
 
@@ -43,7 +39,6 @@ router.post('/', (req, res) => {
     res.status(201).json(newPost);
 });
 
-// PUT
 router.put('/:id', (req, res) => {
     const post = posts.find(p => p.id == req.params.id);
     if (!post) return res.status(404).json({ message: 'Post not found' });
@@ -57,7 +52,6 @@ router.put('/:id', (req, res) => {
     res.json(post);
 });
 
-// DELETE
 router.delete('/:id', (req, res) => {
     const index = posts.findIndex(p => p.id == req.params.id);
     if (index === -1) return res.status(404).json({ message: 'Post not found' });
