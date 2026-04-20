@@ -10,15 +10,6 @@ import {
 
 const router = express.Router();
 
-router.get("/author/:authorId", async (req, res, next) => {
-    try {
-        const posts = await getPostsByAuthor(req.params.authorId);
-        res.json(posts);
-    } catch (error) {
-        next(error);
-    }
-});
-
 router.get("/", async (req, res, next) => {
     try {
         const posts = await getAllPosts();
@@ -42,6 +33,15 @@ router.get("/:id", async (req, res, next) => {
     }
 });
 
+router.get("/author/:authorId", async (req, res, next) => {
+    try {
+        const posts = await getPostsByAuthor(req.params.authorId);
+        res.json(posts);
+    } catch (error) {
+        next(error);
+    }
+});
+
 router.post("/", async (req, res, next) => {
     try {
         const { title, content, author_id } = req.body;
@@ -54,10 +54,6 @@ router.post("/", async (req, res, next) => {
 
         res.status(201).json(newPost);
     } catch (error) {
-        if (error.code === "23503") {
-            return res.status(400).json({ message: "Author does not exist" });
-        }
-
         next(error);
     }
 });
