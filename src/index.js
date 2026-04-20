@@ -23,3 +23,11 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
+
+
+
+import pool from "./db/db.js";
+
+pool.connect()
+    .then(() => console.log("✅ Conectado a PostgreSQL"))
+    .catch(err => console.error("❌ Error de conexión", err));
