@@ -1,75 +1,100 @@
 import express from "express";
+import {
+    getAllPosts,
+    getPostById,
+    getPostsByAuthor,
+    createPost,
+    updatePost,
+    deletePost
+} from "../services/posts-service.js";
+
 const router = express.Router();
 
-let posts = [
-    { id: 1, title: "Post 1", content: "Contenido", author_id: 1, published: true }
-];
-
-router.get("/author/:authorId", (req, res) => {
-    const result = posts.filter(p => p.author_id == req.params.authorId);
-    res.json(result);
-});
-
-router.get("/", (req, res) => {
-    res.json(posts);
-});
-
-router.get("/:id", (req, res) => {
-    const post = posts.find(p => p.id == req.params.id);
-
-    if (!post) {
-        return res.status(404).json({ message: "Post not found" });
+router.get("/author/:authorId", async (req, res, next) => {
+    try {
+        const posts = await getPostsByAuthor(req.params.authorId);
+        res.json(posts);
+    } catch (error) {
+        next(error);
     }
-
-    res.json(post);
 });
 
-router.post("/", (req, res) => {
-    const { title, content, author_id } = req.body;
-
-    if (!title || !content || !author_id) {
-        return res.status(400).json({ message: "Missing fields" });
+router.get("/", async (req, res, next) => {
+    try {
+        const posts = await getAllPosts();
+        res.json(posts);
+    } catch (error) {
+        next(error);
     }
-
-    const newPost = {
-        id: posts.length + 1,
-        title,
-        content,
-        author_id,
-        published: false
-    };
-
-    posts.push(newPost);
-
-    res.status(201).json(newPost);
 });
 
-router.put("/:id", (req, res) => {
-    const post = posts.find(p => p.id == req.params.id);
+router.get("/:id", async (req, res, next) => {
+    try {
+        const post = await getPostById(req.params.id);
 
-    if (!post) {
-        return res.status(404).json({ message: "Post not found" });
+        if (!post) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        res.json(post);
+    } catch (error) {
+        next(error);
     }
-
-    const { title, content, published } = req.body;
-
-    if (title) post.title = title;
-    if (content) post.content = content;
-    if (published !== undefined) post.published = published;
-
-    res.json(post);
 });
 
-router.delete("/:id", (req, res) => {
-    const index = posts.findIndex(p => p.id == req.params.id);
+router.post("/", async (req, res, next) => {
+    try {
+        const { title, content, author_id } = req.body;
 
-    if (index === -1) {
-        return res.status(404).json({ message: "Post not found" });
+        if (!title || !content || !author_id) {
+            return res.status(400).json({ message: "Missing fields" });
+        }
+
+        const newPost = await createPost(title, content, author_id);
+
+        res.status(201).json(newPost);
+    } catch (error) {
+        if (error.code === "23503") {
+            return res.status(400).json({ message: "Author does not exist" });
+        }
+
+        next(error);
     }
+});
 
-    posts.splice(index, 1);
+router.put("/:id", async (req, res, next) => {
+    try {
+        const { title, content, published } = req.body;
 
-    res.status(204).send();
+        const updated = await updatePost(
+            req.params.id,
+            title,
+            content,
+            published
+        );
+
+        if (!updated) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        res.json(updated);
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.delete("/:id", async (req, res, next) => {
+    try {
+        const deleted = await deletePost(req.params.id);
+
+        if (!deleted) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        res.status(204).send();
+    } catch (error) {
+        next(error);
+    }
 });
 
 export default router;
