@@ -25,3 +25,5 @@ pool.connect()
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
+
+export default app;
