@@ -9,7 +9,8 @@
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "testMatch": ["**/?(*.)+(test).[jt]s", "**/?(*.)+(-test).[jt]s"]
   },
   "dependencies": {
     "dotenv": "^17.4.2",
