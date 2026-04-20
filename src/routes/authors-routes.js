@@ -36,14 +36,19 @@ router.post("/", async (req, res, next) => {
     try {
         const { name, email, bio } = req.body;
 
-        if (!name) {
-            return res.status(400).json({ message: "Name is required" });
+        if (!name || !email) {
+            return res.status(400).json({ message: "Name and email are required" });
         }
 
         const newAuthor = await createAuthor(name, email, bio);
 
         res.status(201).json(newAuthor);
     } catch (error) {
+
+        if (error.code === "23505") {
+            return res.status(400).json({ message: "Email already exists" });
+        }
+
         next(error);
     }
 });
@@ -65,6 +70,10 @@ router.put("/:id", async (req, res, next) => {
 
         res.json(updated);
     } catch (error) {
+        if (error.code === "23505") {
+            return res.status(400).json({ message: "Email already exists" });
+        }
+
         next(error);
     }
 });

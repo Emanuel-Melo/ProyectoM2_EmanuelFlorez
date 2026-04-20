@@ -34,7 +34,7 @@ export const updateAuthor = async (id, name, email, bio) => {
         [name, email, bio, id]
     );
 
-    return result.rows[0]; // undefined si no existe
+    return result.rows[0];
 };
 
 export const deleteAuthor = async (id) => {
@@ -43,5 +43,5 @@ export const deleteAuthor = async (id) => {
         [id]
     );
 
-    return result.rows[0]; // undefined si no existe
+    return result.rows[0];
 };
