@@ -11,8 +11,14 @@ app.get("/", (req, res) => {
     res.send("API funcionando 🚀");
 });
 
+// Rutas
 app.use("/authors", authorsRoutes);
 app.use("/posts", postsRoutes);
+
+app.use((err, req, res, next) => {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+});
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
