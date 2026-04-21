@@ -53,6 +53,22 @@ La API permite:
 - ├── index.js
 └── server.js
 
-📁 tests
-├── authors.test.js
-└── comments.test.js
+- 📁 tests
+- ├── authors.test.js
+- └── comments.test.js
+
+- 📄 package.json
+- 📄 .env.example
+- 📄 README.md
+
+
+---
+
+## ⚙️ Instalación y ejecución local
+
+### 1. Clonar el repositorio
+
+```bash
+git clone <TU_REPO_URL>
+cd miniblog-api
+````
