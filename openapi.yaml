@@ -3,7 +3,6 @@ info:
   title: Miniblog API
   description: API REST para gestión de authors, posts y comments
   version: 1.0.0
-
 servers:
   - url: http://localhost:3000
 
