@@ -36,7 +36,7 @@ La API permite:
 
 ## 📂 Estructura del proyecto
 
- 📁 src
+📁 src
 ├── 📁 db
 │ ├── db.js
 │ └── setup.sql
