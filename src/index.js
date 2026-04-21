@@ -24,3 +24,11 @@ app.listen(PORT, () => {
 });
 
 export default app;
+
+process.on("uncaughtException", (err) => {
+    console.error("UNCUGHT ERROR:", err);
+});
+
+process.on("unhandledRejection", (err) => {
+    console.error("UNHANDLED REJECTION:", err);
+});
