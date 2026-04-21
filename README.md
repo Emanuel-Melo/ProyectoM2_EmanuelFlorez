@@ -51,7 +51,7 @@ La API permite:
 - ├── 📁 middlewares
 - │ └── error-handler.js
 - ├── index.js
-└── server.js
+- └── server.js
 
 - 📁 tests
 - ├── authors.test.js
@@ -72,3 +72,23 @@ La API permite:
 git clone <TU_REPO_URL>
 cd miniblog-api
 ````
+
+### 2. Intalar dependecias
+
+````bash
+npm install
+````
+
+### 3. Configurar variables de entorno
+
+Crear un archivo .env basado en .env.example:
+
+````env
+DB_USER=postgres
+DB_HOST=localhost
+DB_NAME=miniblog
+DB_PASSWORD=tu_password
+DB_PORT=5432
+PORT=3000
+````
+
