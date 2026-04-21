@@ -20,7 +20,13 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:id", async (req, res, next) => {
     try {
-        const author = await getAuthorById(req.params.id);
+        const id = parseInt(req.params.id);
+
+        if (isNaN(id)) {
+            return res.status(400).json({ message: "Invalid author id" });
+        }
+
+        const author = await getAuthorById(id);
 
         if (!author) {
             return res.status(404).json({ message: "Author not found" });
@@ -36,33 +42,34 @@ router.post("/", async (req, res, next) => {
     try {
         const { name, email, bio } = req.body;
 
-        if (!name || !email) {
-            return res.status(400).json({ message: "Name and email are required" });
+        if (!name?.trim() || !email?.trim()) {
+            return res.status(400).json({
+                message: "Name and email are required"
+            });
         }
 
         const newAuthor = await createAuthor(name, email, bio);
-
         res.status(201).json(newAuthor);
-    } catch (error) {
 
+    } catch (error) {
         if (error.code === "23505") {
             return res.status(400).json({ message: "Email already exists" });
         }
-
         next(error);
     }
 });
 
 router.put("/:id", async (req, res, next) => {
     try {
+        const id = parseInt(req.params.id);
+
+        if (isNaN(id)) {
+            return res.status(400).json({ message: "Invalid author id" });
+        }
+
         const { name, email, bio } = req.body;
 
-        const updated = await updateAuthor(
-            req.params.id,
-            name,
-            email,
-            bio
-        );
+        const updated = await updateAuthor(id, name, email, bio);
 
         if (!updated) {
             return res.status(404).json({ message: "Author not found" });
@@ -73,14 +80,19 @@ router.put("/:id", async (req, res, next) => {
         if (error.code === "23505") {
             return res.status(400).json({ message: "Email already exists" });
         }
-
         next(error);
     }
 });
 
 router.delete("/:id", async (req, res, next) => {
     try {
-        const deleted = await deleteAuthor(req.params.id);
+        const id = parseInt(req.params.id);
+
+        if (isNaN(id)) {
+            return res.status(400).json({ message: "Invalid author id" });
+        }
+
+        const deleted = await deleteAuthor(id);
 
         if (!deleted) {
             return res.status(404).json({ message: "Author not found" });
