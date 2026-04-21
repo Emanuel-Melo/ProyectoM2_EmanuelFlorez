@@ -241,6 +241,18 @@ PORT
 ✅ Validaciones implementadas
 ✅ Documentación completa
 
+---
+
+## 📚 Documentación API (OpenAPI)
+
+Puedes visualizar la documentación usando Swagger Editor:
+
+1. Ir a https://editor.swagger.io/
+2. Copiar el contenido de `openapi.yaml`
+3. Pegar en el editor
+
+O usar Swagger UI local.
+
 --- 
 
 ## 👨‍💻 Autor
