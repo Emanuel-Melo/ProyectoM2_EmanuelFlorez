@@ -1,11 +1,17 @@
 import app from "./index.js";
+import pool from "./db/db.js";
 
 const PORT = process.env.PORT || 3000;
 
-const server = app.listen(PORT, () => {
-    console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
-});
+// Conectar DB primero
+pool.connect()
+    .then(() => {
+        console.log("✅ Conectado a PostgreSQL");
 
-server.on("error", (err) => {
-    console.error("❌ Error al iniciar el servidor:", err.message);
-});
+        app.listen(PORT, () => {
+        console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.error("❌ Error de conexión a PostgreSQL:", err.message);
+    });
