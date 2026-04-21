@@ -10,7 +10,7 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "testMatch": ["**/?(*.)+(test).[jt]s", "**/?(*.)+(-test).[jt]s"]
+    "testRegex": "tests/.*\\.js$"
   },
   "dependencies": {
     "dotenv": "^17.4.2",
