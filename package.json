@@ -12,9 +12,8 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "testRegex": "tests/.*\\.js$",
-    "transform": {},
-    "setupFilesAfterEnv": ["<rootDir>/tests/setup.js"]
+    "testRegex": "tests/.*\\.test\\.js$",
+    "setupFilesAfterEnv": ["<rootDir>/tests/jest.setup.js"]
   },
   "dependencies": {
     "dotenv": "^17.4.2",
