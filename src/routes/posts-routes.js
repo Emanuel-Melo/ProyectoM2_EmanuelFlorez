@@ -56,8 +56,8 @@ router.post("/", async (req, res, next) => {
         const authorExists = await checkAuthorExists(author_id);
 
         if (!authorExists) {
-            return res.status(400).json({
-                message: "Author does not exist"
+            return res.status(404).json({
+                message: "Author not found"
             });
         }
 
