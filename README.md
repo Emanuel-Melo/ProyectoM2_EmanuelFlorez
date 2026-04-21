@@ -91,4 +91,23 @@ DB_PASSWORD=tu_password
 DB_PORT=5432
 PORT=3000
 ````
+---
+##🗄️ Configuración de la base de datos
 
+### 1. Crear base de datos en PostgreSQL
+
+````SQL
+CREATE DATABASE miniblog;
+````
+
+### Ejecutar script SQL
+Desde la terminal de PostgreSQL:
+
+````SQL
+\c miniblog
+\i ruta/a/setup.sql
+````
+Ejemplo con Windows:
+````SQL
+\i C:/Users/TU_USUARIO/.../setup.sql
+````
