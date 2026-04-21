@@ -1,12 +1,13 @@
 import express from "express";
-import pool from "../db/db.js";
 
 import {
     getAllComments,
     getCommentById,
     getCommentsByPost,
     createComment,
-    deleteComment
+    deleteComment,
+    checkAuthorExists,
+    checkPostExists
 } from "../services/comments-service.js";
 
 const router = express.Router();
@@ -20,24 +21,38 @@ router.get("/", async (req, res, next) => {
     }
 });
 
+router.get("/post/:postId", async (req, res, next) => {
+    try {
+        const postId = parseInt(req.params.postId);
+
+        if (isNaN(postId)) {
+            return res.status(400).json({ message: "Invalid post id" });
+        }
+
+        const comments = await getCommentsByPost(postId);
+        res.json(comments);
+
+    } catch (error) {
+        next(error);
+    }
+});
+
 router.get("/:id", async (req, res, next) => {
     try {
-        const comment = await getCommentById(req.params.id);
+        const id = parseInt(req.params.id);
+
+        if (isNaN(id)) {
+            return res.status(400).json({ message: "Invalid comment id" });
+        }
+
+        const comment = await getCommentById(id);
 
         if (!comment) {
             return res.status(404).json({ message: "Comment not found" });
         }
 
         res.json(comment);
-    } catch (error) {
-        next(error);
-    }
-});
 
-router.get("/post/:postId", async (req, res, next) => {
-    try {
-        const comments = await getCommentsByPost(req.params.postId);
-        res.json(comments);
     } catch (error) {
         next(error);
     }
@@ -47,40 +62,32 @@ router.post("/", async (req, res, next) => {
     try {
         const { content, author_id, post_id } = req.body;
 
-        if (!content || !author_id || !post_id) {
+        if (!content?.trim() || !author_id || !post_id) {
             return res.status(400).json({
                 message: "content, author_id and post_id are required"
             });
         }
 
-        const author = await pool.query(
-            "SELECT id FROM authors WHERE id = $1",
-            [author_id]
-        );
+        const authorId = parseInt(author_id);
+        const postId = parseInt(post_id);
 
-        if (author.rows.length === 0) {
+        if (isNaN(authorId) || isNaN(postId)) {
             return res.status(400).json({
-                message: "Author does not exist"
+                message: "Invalid author_id or post_id"
             });
         }
 
-        const post = await pool.query(
-            "SELECT id FROM posts WHERE id = $1",
-            [post_id]
-        );
-
-        if (post.rows.length === 0) {
-            return res.status(400).json({
-                message: "Post does not exist"
-            });
+        const authorExists = await checkAuthorExists(authorId);
+        if (!authorExists) {
+            return res.status(404).json({ message: "Author not found" });
         }
 
-        const newComment = await createComment(
-            content,
-            author_id,
-            post_id
-        );
+        const postExists = await checkPostExists(postId);
+        if (!postExists) {
+            return res.status(404).json({ message: "Post not found" });
+        }
 
+        const newComment = await createComment(content, authorId, postId);
         res.status(201).json(newComment);
 
     } catch (error) {
@@ -90,7 +97,13 @@ router.post("/", async (req, res, next) => {
 
 router.delete("/:id", async (req, res, next) => {
     try {
-        const deleted = await deleteComment(req.params.id);
+        const id = parseInt(req.params.id);
+
+        if (isNaN(id)) {
+            return res.status(400).json({ message: "Invalid comment id" });
+        }
+
+        const deleted = await deleteComment(id);
 
         if (!deleted) {
             return res.status(404).json({
