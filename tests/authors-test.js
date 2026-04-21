@@ -2,8 +2,10 @@ import request from "supertest";
 import app from "../src/index.js";
 import pool from "../src/db/db.js";
 
+let createdAuthorId;
+
 afterAll(async () => {
-    await pool.end(); 
+    await pool.end();
 });
 
 describe("Authors API", () => {
@@ -20,12 +22,14 @@ describe("Authors API", () => {
             .post("/authors")
             .send({
                 name: "Test User",
-                email: `test${Date.now()}@example.com`, 
+                email: `test${Date.now()}@example.com`,
                 bio: "Testing"
             });
 
         expect(res.statusCode).toBe(201);
         expect(res.body).toHaveProperty("id");
+        expect(res.body.name).toBe("Test User");
+        createdAuthorId = res.body.id;
     });
 
     test("POST /authors should fail without name", async () => {
@@ -42,6 +46,22 @@ describe("Authors API", () => {
         const res = await request(app).get("/authors/99999");
 
         expect(res.statusCode).toBe(404);
+    });
+
+    test("PUT /authors/:id should update author", async () => {
+        const res = await request(app)
+            .put(`/authors/${createdAuthorId}`)
+            .send({
+                name: "Updated Name"
+            });
+
+        expect(res.statusCode).toBe(200);
+        expect(res.body.name).toBe("Updated Name");
+    });
+    test("DELETE /authors/:id should delete author", async () => {
+        const res = await request(app)
+            .delete(`/authors/${createdAuthorId}`);
+        expect(res.statusCode).toBe(204);
     });
 
 });
