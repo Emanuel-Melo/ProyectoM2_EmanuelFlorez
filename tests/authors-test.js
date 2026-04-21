@@ -4,10 +4,6 @@ import pool from "../src/db/db.js";
 
 let createdAuthorId;
 
-afterAll(async () => {
-    await pool.end();
-});
-
 describe("Authors API", () => {
 
     test("GET /authors should return all authors", async () => {

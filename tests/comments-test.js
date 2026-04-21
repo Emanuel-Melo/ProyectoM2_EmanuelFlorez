@@ -6,10 +6,6 @@ describe("Comments API", () => {
 
     let createdCommentId;
 
-    afterAll(async () => {
-        await pool.end();
-    });
-
     test("GET /comments should return all comments", async () => {
         const res = await request(app).get("/comments");
 
