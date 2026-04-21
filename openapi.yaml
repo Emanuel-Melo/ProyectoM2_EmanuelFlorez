@@ -1,0 +1,251 @@
+openapi: 3.0.0
+info:
+  title: Miniblog API
+  description: API REST para gestión de authors, posts y comments
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+
+paths:
+
+  /authors:
+    get:
+      summary: Obtener todos los autores
+      responses:
+        200:
+          description: Lista de autores
+
+    post:
+      summary: Crear un autor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                bio:
+                  type: string
+      responses:
+        201:
+          description: Autor creado
+        400:
+          description: Error de validación
+
+  /authors/{id}:
+    get:
+      summary: Obtener autor por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Autor encontrado
+        404:
+          description: Autor no encontrado
+
+    put:
+      summary: Actualizar autor
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        200:
+          description: Autor actualizado
+        404:
+          description: Autor no encontrado
+
+    delete:
+      summary: Eliminar autor
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: Eliminado
+        404:
+          description: No encontrado
+
+  /posts:
+    get:
+      summary: Obtener todos los posts
+      responses:
+        200:
+          description: Lista de posts
+
+    post:
+      summary: Crear un post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - content
+                - author_id
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+                author_id:
+                  type: integer
+      responses:
+        201:
+          description: Post creado
+        400:
+          description: Error de validación
+
+  /posts/{id}:
+    get:
+      summary: Obtener post por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Post encontrado
+        404:
+          description: No encontrado
+
+    put:
+      summary: Actualizar post
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Actualizado
+        404:
+          description: No encontrado
+
+    delete:
+      summary: Eliminar post
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: Eliminado
+        404:
+          description: No encontrado
+
+  /posts/author/{authorId}:
+    get:
+      summary: Obtener posts por author
+      parameters:
+        - in: path
+          name: authorId
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Lista de posts
+
+  /comments:
+    get:
+      summary: Obtener todos los comentarios
+      responses:
+        200:
+          description: Lista de comentarios
+
+    post:
+      summary: Crear comentario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - content
+                - author_id
+                - post_id
+              properties:
+                content:
+                  type: string
+                author_id:
+                  type: integer
+                post_id:
+                  type: integer
+      responses:
+        201:
+          description: Comentario creado
+        400:
+          description: Error
+
+  /comments/{id}:
+    get:
+      summary: Obtener comentario por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Comentario encontrado
+        404:
+          description: No encontrado
+
+    delete:
+      summary: Eliminar comentario
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: Eliminado
+        404:
+          description: No encontrado
+
+  /comments/post/{postId}:
+    get:
+      summary: Obtener comentarios por post
+      parameters:
+        - in: path
+          name: postId
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Lista de comentarios
