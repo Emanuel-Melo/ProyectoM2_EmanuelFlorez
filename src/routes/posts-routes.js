@@ -5,7 +5,8 @@ import {
     getPostsByAuthor,
     createPost,
     updatePost,
-    deletePost
+    deletePost,
+    checkAuthorExists
 } from "../services/posts-service.js";
 
 const router = express.Router();
@@ -47,7 +48,17 @@ router.post("/", async (req, res, next) => {
         const { title, content, author_id } = req.body;
 
         if (!title || !content || !author_id) {
-            return res.status(400).json({ message: "Missing fields" });
+            return res.status(400).json({
+                message: "title, content and author_id are required"
+            });
+        }
+
+        const authorExists = await checkAuthorExists(author_id);
+
+        if (!authorExists) {
+            return res.status(400).json({
+                message: "Author does not exist"
+            });
         }
 
         const newPost = await createPost(title, content, author_id);
@@ -74,6 +85,7 @@ router.put("/:id", async (req, res, next) => {
         }
 
         res.json(updated);
+
     } catch (error) {
         next(error);
     }
@@ -88,6 +100,7 @@ router.delete("/:id", async (req, res, next) => {
         }
 
         res.status(204).send();
+
     } catch (error) {
         next(error);
     }
