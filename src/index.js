@@ -13,7 +13,7 @@ app.use("/posts", postsRoutes);
 app.use("/comments", commentsRoutes);
 
 app.get("/", (req, res) => {
-    res.json({ message: "API funcionando 🚀" });
+    res.send("API funcionando 🚀");
 });
 
 app.use(errorHandler);
