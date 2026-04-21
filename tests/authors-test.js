@@ -1,5 +1,10 @@
 import request from "supertest";
 import app from "../src/index.js";
+import pool from "../src/db/db.js";
+
+afterAll(async () => {
+    await pool.end(); 
+});
 
 describe("Authors API", () => {
 
@@ -15,7 +20,7 @@ describe("Authors API", () => {
             .post("/authors")
             .send({
                 name: "Test User",
-                email: `test${Date.now()}@example.com`, // 🔥 evita duplicados
+                email: `test${Date.now()}@example.com`, 
                 bio: "Testing"
             });
 
