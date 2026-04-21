@@ -13,7 +13,7 @@ paths:
     get:
       summary: Obtener todos los autores
       responses:
-        200:
+        "200":
           description: Lista de autores
 
     post:
@@ -35,9 +35,9 @@ paths:
                 bio:
                   type: string
       responses:
-        201:
+        "201":
           description: Autor creado
-        400:
+        "400":
           description: Error de validación
 
   /authors/{id}:
@@ -50,9 +50,9 @@ paths:
           schema:
             type: integer
       responses:
-        200:
+        "200":
           description: Autor encontrado
-        404:
+        "404":
           description: Autor no encontrado
 
     put:
@@ -69,9 +69,9 @@ paths:
             schema:
               type: object
       responses:
-        200:
+        "200":
           description: Autor actualizado
-        404:
+        "404":
           description: Autor no encontrado
 
     delete:
@@ -83,16 +83,16 @@ paths:
           schema:
             type: integer
       responses:
-        204:
+        "204":
           description: Eliminado
-        404:
+        "404":
           description: No encontrado
 
   /posts:
     get:
       summary: Obtener todos los posts
       responses:
-        200:
+        "200":
           description: Lista de posts
 
     post:
@@ -115,9 +115,9 @@ paths:
                 author_id:
                   type: integer
       responses:
-        201:
+        "201":
           description: Post creado
-        400:
+        "400":
           description: Error de validación
 
   /posts/{id}:
@@ -130,9 +130,9 @@ paths:
           schema:
             type: integer
       responses:
-        200:
+        "200":
           description: Post encontrado
-        404:
+        "404":
           description: No encontrado
 
     put:
@@ -144,9 +144,9 @@ paths:
           schema:
             type: integer
       responses:
-        200:
+        "200":
           description: Actualizado
-        404:
+        "404":
           description: No encontrado
 
     delete:
@@ -158,9 +158,9 @@ paths:
           schema:
             type: integer
       responses:
-        204:
+        "204":
           description: Eliminado
-        404:
+        "404":
           description: No encontrado
 
   /posts/author/{authorId}:
@@ -173,14 +173,14 @@ paths:
           schema:
             type: integer
       responses:
-        200:
+        "200":
           description: Lista de posts
 
   /comments:
     get:
       summary: Obtener todos los comentarios
       responses:
-        200:
+        "200":
           description: Lista de comentarios
 
     post:
@@ -203,9 +203,9 @@ paths:
                 post_id:
                   type: integer
       responses:
-        201:
+        "201":
           description: Comentario creado
-        400:
+        "400":
           description: Error
 
   /comments/{id}:
@@ -218,9 +218,9 @@ paths:
           schema:
             type: integer
       responses:
-        200:
+        "200":
           description: Comentario encontrado
-        404:
+        "404":
           description: No encontrado
 
     delete:
@@ -232,9 +232,9 @@ paths:
           schema:
             type: integer
       responses:
-        204:
+        "204":
           description: Eliminado
-        404:
+        "404":
           description: No encontrado
 
   /comments/post/{postId}:
@@ -247,5 +247,5 @@ paths:
           schema:
             type: integer
       responses:
-        200:
+        "200":
           description: Lista de comentarios
