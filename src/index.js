@@ -5,6 +5,7 @@ import commentsRoutes from "./routes/comments-routes.js";
 import errorHandler from "./middlewares/error-handler.js";
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
@@ -17,5 +18,9 @@ app.get("/", (req, res) => {
 });
 
 app.use(errorHandler);
+
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
 
 export default app;
