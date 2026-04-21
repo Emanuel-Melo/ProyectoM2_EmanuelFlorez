@@ -37,20 +37,20 @@ La API permite:
 ## 📂 Estructura del proyecto
 
 📁 src
-├── 📁 db
-│ ├── db.js
-│ └── setup.sql
-├── 📁 routes
-│ ├── authors-routes.js
-│ ├── posts-routes.js
-│ └── comments-routes.js
-├── 📁 services
-│ ├── authors-service.js
-│ ├── posts-service.js
-│ └── comments-service.js
-├── 📁 middlewares
-│ └── error-handler.js
-├── index.js
+- ├── 📁 db
+- │ ├── db.js
+- │ └── setup.sql
+- ├── 📁 routes
+- │ ├── authors-routes.js
+- │ ├── posts-routes.js
+- │ └── comments-routes.js
+- ├── 📁 services
+- │ ├── authors-service.js
+- │ ├── posts-service.js
+- │ └── comments-service.js
+- ├── 📁 middlewares
+- │ └── error-handler.js
+- ├── index.js
 └── server.js
 
 📁 tests
