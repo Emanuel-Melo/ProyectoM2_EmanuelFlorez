@@ -111,3 +111,29 @@ Ejemplo con Windows:
 ````SQL
 \i C:/Users/TU_USUARIO/.../setup.sql
 ````
+
+### ▶️ Ejecutar la aplicación
+
+````bash
+npm run dev
+````
+
+Servidor disponible en:
+````
+http://localhost:3000
+````
+
+---
+
+## 📡 Endpoints disponibles
+
+### 👤 Authors
+
+| Método | Endpoint     | Descripción      |
+| ------ | ------------ | ---------------- |
+| GET    | /authors     | Listar autores   |
+| GET    | /authors/:id | Obtener autor    |
+| POST   | /authors     | Crear autor      |
+| PUT    | /authors/:id | Actualizar autor |
+| DELETE | /authors/:id | Eliminar autor   |
+
