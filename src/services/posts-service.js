@@ -15,22 +15,9 @@ export const getPostById = async (id) => {
 
 export const getPostsByAuthor = async (authorId) => {
     const result = await pool.query(
-        `SELECT 
-            posts.id,
-            posts.title,
-            posts.content,
-            posts.published,
-            posts.created_at,
-            authors.id AS author_id,
-            authors.name AS author_name,
-            authors.email AS author_email
-        FROM posts
-        JOIN authors ON posts.author_id = authors.id
-        WHERE authors.id = $1
-        ORDER BY posts.id`,
+        "SELECT * FROM posts WHERE author_id = $1",
         [authorId]
     );
-
     return result.rows;
 };
 
@@ -41,7 +28,6 @@ export const createPost = async (title, content, author_id) => {
         RETURNING *`,
         [title, content, author_id]
     );
-
     return result.rows[0];
 };
 
@@ -55,7 +41,6 @@ export const updatePost = async (id, title, content, published) => {
         RETURNING *`,
         [title, content, published, id]
     );
-
     return result.rows[0];
 };
 
@@ -64,6 +49,5 @@ export const deletePost = async (id) => {
         "DELETE FROM posts WHERE id = $1 RETURNING *",
         [id]
     );
-
     return result.rows[0];
 };
