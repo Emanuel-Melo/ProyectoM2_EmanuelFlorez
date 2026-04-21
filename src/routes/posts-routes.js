@@ -20,24 +20,38 @@ router.get("/", async (req, res, next) => {
     }
 });
 
+router.get("/author/:authorId", async (req, res, next) => {
+    try {
+        const authorId = parseInt(req.params.authorId);
+
+        if (isNaN(authorId)) {
+            return res.status(400).json({ message: "Invalid author id" });
+        }
+
+        const posts = await getPostsByAuthor(authorId);
+        res.json(posts);
+
+    } catch (error) {
+        next(error);
+    }
+});
+
 router.get("/:id", async (req, res, next) => {
     try {
-        const post = await getPostById(req.params.id);
+        const id = parseInt(req.params.id);
+
+        if (isNaN(id)) {
+            return res.status(400).json({ message: "Invalid post id" });
+        }
+
+        const post = await getPostById(id);
 
         if (!post) {
             return res.status(404).json({ message: "Post not found" });
         }
 
         res.json(post);
-    } catch (error) {
-        next(error);
-    }
-});
 
-router.get("/author/:authorId", async (req, res, next) => {
-    try {
-        const posts = await getPostsByAuthor(req.params.authorId);
-        res.json(posts);
     } catch (error) {
         next(error);
     }
@@ -47,13 +61,19 @@ router.post("/", async (req, res, next) => {
     try {
         const { title, content, author_id } = req.body;
 
-        if (!title || !content || !author_id) {
+        if (!title?.trim() || !content?.trim() || !author_id) {
             return res.status(400).json({
                 message: "title, content and author_id are required"
             });
         }
 
-        const authorExists = await checkAuthorExists(author_id);
+        const authorId = parseInt(author_id);
+
+        if (isNaN(authorId)) {
+            return res.status(400).json({ message: "Invalid author_id" });
+        }
+
+        const authorExists = await checkAuthorExists(authorId);
 
         if (!authorExists) {
             return res.status(404).json({
@@ -61,8 +81,7 @@ router.post("/", async (req, res, next) => {
             });
         }
 
-        const newPost = await createPost(title, content, author_id);
-
+        const newPost = await createPost(title, content, authorId);
         res.status(201).json(newPost);
     } catch (error) {
         next(error);
@@ -71,14 +90,21 @@ router.post("/", async (req, res, next) => {
 
 router.put("/:id", async (req, res, next) => {
     try {
+        const id = parseInt(req.params.id);
+
+        if (isNaN(id)) {
+            return res.status(400).json({ message: "Invalid post id" });
+        }
+
         const { title, content, published } = req.body;
 
-        const updated = await updatePost(
-            req.params.id,
-            title,
-            content,
-            published
-        );
+        if (!title && !content && published === undefined) {
+            return res.status(400).json({
+                message: "At least one field must be provided"
+            });
+        }
+
+        const updated = await updatePost(id, title, content, published);
 
         if (!updated) {
             return res.status(404).json({ message: "Post not found" });
@@ -93,7 +119,13 @@ router.put("/:id", async (req, res, next) => {
 
 router.delete("/:id", async (req, res, next) => {
     try {
-        const deleted = await deletePost(req.params.id);
+        const id = parseInt(req.params.id);
+
+        if (isNaN(id)) {
+            return res.status(400).json({ message: "Invalid post id" });
+        }
+
+        const deleted = await deletePost(id);
 
         if (!deleted) {
             return res.status(404).json({ message: "Post not found" });
