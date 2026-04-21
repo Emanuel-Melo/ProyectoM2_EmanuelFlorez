@@ -1,13 +1,15 @@
 {
   "name": "miniblog-api",
   "version": "1.0.0",
-  "description": "API REST para authors y posts",
-  "main": "index.js",
+  "description": "REST API for managing authors, posts and comments using Node.js, Express and PostgreSQL",
+  "main": "src/server.js",
   "type": "module",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
-},
+    "start": "node src/server.js",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
   "jest": {
     "testEnvironment": "node",
     "testRegex": "tests/.*\\.js$"
