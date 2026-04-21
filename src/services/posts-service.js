@@ -9,17 +9,28 @@ export const getAllPosts = async () => {
 
 export const getPostById = async (id) => {
     const result = await pool.query(
-        "SELECT * FROM posts WHERE id = $1",
+        `SELECT p.*, a.name AS author_name, a.email AS author_email
+        FROM posts p
+        JOIN authors a ON p.author_id = a.id
+        WHERE p.id = $1`,
         [id]
     );
-    return result.rows[0];
+
+    return result.rows[0] || null;
 };
 
 export const getPostsByAuthor = async (authorId) => {
     const result = await pool.query(
-        "SELECT * FROM posts WHERE author_id = $1",
+        `SELECT 
+            p.*,
+            a.name AS author_name,
+            a.email AS author_email
+        FROM posts p
+        JOIN authors a ON p.author_id = a.id
+        WHERE p.author_id = $1`,
         [authorId]
     );
+
     return result.rows;
 };
 
@@ -32,7 +43,6 @@ export const checkAuthorExists = async (author_id) => {
 };
 
 export const createPost = async (title, content, author_id, published = false) => {
-
     const result = await pool.query(
         `INSERT INTO posts (title, content, author_id, published)
         VALUES ($1, $2, $3, $4)
@@ -43,7 +53,6 @@ export const createPost = async (title, content, author_id, published = false) =
     return result.rows[0];
 };
 
-
 export const updatePost = async (id, title, content, published) => {
     const result = await pool.query(
         `UPDATE posts
@@ -51,11 +60,11 @@ export const updatePost = async (id, title, content, published) => {
             content = COALESCE($2, content),
             published = COALESCE($3, published)
         WHERE id = $4
-        RETURNING *`,
+         RETURNING *`,
         [title, content, published, id]
     );
 
-    return result.rows[0];
+    return result.rows[0] || null;
 };
 
 export const deletePost = async (id) => {
@@ -64,5 +73,5 @@ export const deletePost = async (id) => {
         [id]
     );
 
-    return result.rows[0];
+    return result.rows[0] || null;
 };
