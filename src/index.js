@@ -2,6 +2,9 @@ import express from "express";
 import authorsRoutes from "./routes/authors-routes.js";
 import postsRoutes from "./routes/posts-routes.js";
 import errorHandler from "./middlewares/error-handler.js";
+import commentsRoutes from "./routes/comments-routes.js";
+
+app.use("/comments", commentsRoutes);
 
 const app = express();
 
