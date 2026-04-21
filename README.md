@@ -137,3 +137,113 @@ http://localhost:3000
 | PUT    | /authors/:id | Actualizar autor |
 | DELETE | /authors/:id | Eliminar autor   |
 
+---
+
+### 📝 Posts
+
+| Método | Endpoint                | Descripción     |
+| ------ | ----------------------- | --------------- |
+| GET    | /posts                  | Listar posts    |
+| GET    | /posts/:id              | Obtener post    |
+| GET    | /posts/author/:authorId | Posts por autor |
+| POST   | /posts                  | Crear post      |
+| PUT    | /posts/:id              | Actualizar post |
+| DELETE | /posts/:id              | Eliminar post   |
+
+---
+
+### 💬 Comments
+
+| Método | Endpoint               | Descripción          |
+| ------ | ---------------------- | -------------------- |
+| GET    | /comments              | Listar comentarios   |
+| GET    | /comments/:id          | Obtener comentario   |
+| GET    | /comments/post/:postId | Comentarios por post |
+| POST   | /comments              | Crear comentario     |
+| DELETE | /comments/:id          | Eliminar comentario  |
+
+---
+
+## ✅ Validaciones implementadas
+
+- name obligatorio en authors.
+- email único en authors.
+- title, content, author_id obligatorios en posts.
+- content, author_id, post_id obligatorios en comments.
+- Verificación de existencia de author y post.
+- Manejo de errores con códigos HTTP correctos.
+
+---
+
+## 🧪 Testing
+
+Ejecutar tests:
+
+````bash
+npm test
+````
+
+Cobertura:
+- Crear author.
+- Obtener authors.
+- Validaciones de error.
+- Crear comentario.
+- Eliminar comentario.
+- Consultas por relaciones.
+
+---
+
+## 🛡️ Manejo de errores
+
+Middleware global que captura errores y responde con: 
+| Código | Descripción           |
+| ------ | --------------------- |
+| 400    | Bad Request           |
+| 404    | Not Found             |
+| 500    | Internal Server Error |
+
+---
+
+## 🚀 Deployment (Railway)
+### Pasos básicos:
+1. Crear cuenta en Railway
+2. Crear nuevo proyecto
+3. Conectar repositorio GitHub
+4. Configurar variables de entorno:
+````
+DB_USER
+DB_HOST
+DB_NAME
+DB_PASSWORD
+DB_PORT
+PORT
+````
+5. Deploy automático
+
+---
+
+## 🔐 Buenas prácticas aplicadas
+
+- Uso de variables de entorno (.env)
+- No se suben credenciales al repositorio
+- Queries SQL parametrizadas (prevención SQL Injection)
+- Separación de responsabilidades (routes/services)
+- Manejo centralizado de errores
+- Tests automatizados
+
+---
+
+## 📦 Estado del proyecto
+
+✅ API funcional
+✅ Base de datos conectada
+✅ Tests pasando
+✅ Validaciones implementadas
+✅ Documentación completa
+
+--- 
+
+## 👨‍💻 Autor
+
+Emanuel Flórez
+Proyecto académico - Backend Developer Junior 🚀
