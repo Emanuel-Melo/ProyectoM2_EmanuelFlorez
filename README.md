@@ -322,6 +322,13 @@ GET /posts
 https://proyectom2emanuelflorez-production.up.railway.app/posts
 ````
 
+---
+
+## 🤖 Uso de IA
+
+
+
+---
 
 ## 👨‍💻 Autor
 
