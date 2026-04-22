@@ -17,7 +17,7 @@ pool.connect()
         client.release();
     })
     .catch(err => {
-        console.error("❌ Error DB:", err.message);
+        console.error("❌ Error DB:", err);
     });
 
 export default pool;
