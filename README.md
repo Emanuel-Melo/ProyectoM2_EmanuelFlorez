@@ -73,7 +73,7 @@ git clone <TU_REPO_URL>
 cd miniblog-api
 ````
 
-### 2. Intalar dependecias
+### 2. Instalar dependencias
 
 ````bash
 npm install
@@ -164,6 +164,33 @@ http://localhost:3000
 
 ---
 
+## 📡 Ejemplo de uso
+
+### Crear author
+
+POST /authors
+````json
+Body:
+
+{
+  "name": "Juan",
+  "email": "juan@test.com",
+  "bio": "dev junior"
+}
+````
+Respuesta:
+````json
+{
+  "id": 1,
+  "name": "Juan",
+  "email": "juan@test.com",
+  "bio": "dev junior",
+  "created_at": "2026-04-22T16:07:06.553Z"
+}
+````
+
+---
+
 ## ✅ Validaciones implementadas
 
 - name obligatorio en authors.
@@ -205,20 +232,45 @@ Middleware global que captura errores y responde con:
 ---
 
 ## 🚀 Deployment (Railway)
-### Pasos básicos:
+
+Pasos:
+
 1. Crear cuenta en Railway
 2. Crear nuevo proyecto
-3. Conectar repositorio GitHub
-4. Configurar variables de entorno:
-````
-DB_USER
-DB_HOST
-DB_NAME
-DB_PASSWORD
-DB_PORT
-PORT
-````
-5. Deploy automático
+3. Conectar repositorio de GitHub
+4. Añadir servicio de PostgreSQL
+5. Obtener DATABASE_URL desde PostgreSQL (Connect → Public Network)
+6. Configurar variable en el backend:
+
+DATABASE_URL=<connection_string>
+
+7. Deploy automático
+
+### Variables usadas en producción
+
+- DATABASE_URL → conexión a PostgreSQL
+- PORT → asignado automáticamente por Railway
+
+---
+
+## 🔐 Variables de entorno
+
+### Entorno local (.env)
+
+DB_USER=postgres
+DB_HOST=localhost
+DB_NAME=miniblog
+DB_PASSWORD=tu_password
+DB_PORT=5432
+PORT=3000
+
+### Entorno Railway
+
+En producción se utiliza:
+
+DATABASE_URL=postgresql://user:password@host:port/database
+
+PORT es asignado automáticamente por Railway.
 
 ---
 
@@ -254,6 +306,22 @@ Puedes visualizar la documentación usando Swagger Editor:
 O usar Swagger UI local.
 
 --- 
+
+## 🌐 API en producción
+
+Base URL:
+````https://proyectom2emanuelflorez-production.up.railway.app/````
+
+Endpoints de prueba:
+````
+GET /authors  
+https://proyectom2emanuelflorez-production.up.railway.app/authors
+````
+````
+GET /posts  
+https://proyectom2emanuelflorez-production.up.railway.app/posts
+````
+
 
 ## 👨‍💻 Autor
 
