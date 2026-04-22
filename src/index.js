@@ -5,7 +5,6 @@ import commentsRoutes from "./routes/comments-routes.js";
 import errorHandler from "./middlewares/error-handler.js";
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
@@ -20,11 +19,3 @@ app.get("/", (req, res) => {
 app.use(errorHandler);
 
 export default app;
-
-process.on("uncaughtException", (err) => {
-    console.error("UNCUGHT ERROR:", err);
-});
-
-process.on("unhandledRejection", (err) => {
-    console.error("UNHANDLED REJECTION:", err);
-});
