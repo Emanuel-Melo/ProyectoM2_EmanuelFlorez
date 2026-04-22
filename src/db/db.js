@@ -11,5 +11,13 @@ const pool = new Pool({
     ssl: { rejectUnauthorized: false }
 });
 
-export default pool;
+pool.connect()
+    .then(client => {
+        console.log("✅ DB conectada");
+        client.release();
+    })
+    .catch(err => {
+        console.error("❌ Error DB:", err.message);
+    });
+
 export default pool;
