@@ -326,7 +326,16 @@ https://proyectom2emanuelflorez-production.up.railway.app/posts
 
 ## 🤖 Uso de IA
 
+Se utilizó ChatGPT como apoyo durante el desarrollo del proyecto para:
 
+- Funcionamiento del comando ````npm run dev````
+- Correctos test con supertest en terminal a partir de comando ````npm test````
+- Deployment en Railway
+- Mejora de estructura del proyecto
+
+El uso de IA fue complementario y todas las decisiones fueron comprendidas, implementadas y validadas manualmente.
+
+*Para visualizar las evidencias fotográficas del proceso con Chat GPT, entrar a la carpeta de "Capturas evidencias chat gpt", ahí logrará visualizar el proceso detallado por medio de capturas de pantalla.
 
 ---
 
