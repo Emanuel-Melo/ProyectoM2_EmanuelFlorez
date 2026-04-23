@@ -218,6 +218,11 @@ Cobertura:
 - Eliminar comentario.
 - Consultas por relaciones.
 
+Se implementaron más de 6 tests automatizados cubriendo:
+- Casos exitosos
+- Validaciones
+- Errores (404, 400)
+- 
 ---
 
 ## 🛡️ Manejo de errores
@@ -304,6 +309,8 @@ Puedes visualizar la documentación usando Swagger Editor:
 3. Pegar en el editor
 
 O usar Swagger UI local.
+
+El archivo `openapi.yaml` se encuentra en la raíz del proyecto.
 
 --- 
 
